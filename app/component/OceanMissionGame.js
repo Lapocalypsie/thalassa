@@ -115,7 +115,41 @@ const OceanMissionGame = () => {
           },
         },
       ],
-      nextMission: 2,
+      nextMission: 3,
+    },
+    {
+      missionNumber: 3,
+      type: "Mission",
+      hasVideo: false,
+      idVideo: "",
+      preQuestion: "Le blanchiment des coraux",
+      text: "Notre chère héroïne se trouve à présent dans la grande bleue ou réchauffement de l’eau provoque la mort des récifs coralliens, essentiels à la biodiversité. Thalassa ressent une douleur dans ses muscles, symbolisant la destruction de son tissu conjonctif.",
+      choices: [
+        {
+          label: "Planter des coraux résistants à la chaleur",
+          consequence: {
+            text: "Repeupler les récifs avec des espèces adaptées au réchauffement climatique.",
+            impact: { health: -20, oceanHealth: 25, resources: -10 },
+          },
+        },
+        {
+          label:
+            " Sensibiliser et agir pour réduire les émissions de CO₂ dans la région",
+          consequence: {
+            text: "Investir dans des solutions à long terme pour ralentir le réchauffement global.",
+            impact: { health: 5, oceanHealth: 10, resources: 0 },
+          },
+        },
+        {
+          label:
+            "Ne rien faire, Laisser les récifs mourir pour économiser des ressources.",
+          consequence: {
+            text: "L’écosystème s’effondre, et Thalassa perd encore plus de vitalité.",
+            impact: { health: -10, oceanHealth: -20, resources: 0 },
+          },
+        },
+      ],
+      nextMission: 4,
     },
     // ... other scenes ...
   ];
