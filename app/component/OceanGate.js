@@ -190,7 +190,7 @@ const OceanGate = () => {
                 <Link href="/opening">Commencer la Mission</Link>
               </button>
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
-                Qui êtes vous?
+                <Link href="/about">Qui êtes vous?</Link>
               </button>
             </div>
           </div>

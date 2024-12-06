@@ -91,27 +91,27 @@ const OceanMissionGame = () => {
       hasVideo: true,
       idVideo: "6DG_7cJHtMM",
       preQuestion: "La surpêche (Océan Atlantique)",
-      text: "Thalassa entame sa mission en se rendant dans le plus grand océan du monde, l’océan Pacifique. Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
+      text: "Thalassa arrive dans l’océan Atlantique où les populations de poissons s’effondrent en raison de la surpêche, perturbant les écosystèmes.Notre jeune héroïne est pâle et se sent fatiguée, comme si son sang manquait d’oxygène.",
       choices: [
         {
-          label: "Lancer une campagne de nettoyage massive",
+          label: "Ne rien faire",
           consequence: {
-            text: "Vous rassemblez des bénévoles et installez des collecteurs flottants. L'océan commence à respirer, mais l'effort demande beaucoup d'énergie.",
-            impact: { health: -20, oceanHealth: 25, resources: -10 },
+            text: "Éviter les conflits immédiats, mais l’effondrement des stocks de poissons affaiblit davantage Thalassa.",
+            impact: { health: -25, oceanHealth: -15, resources: +10 },
           },
         },
         {
-          label: "Réduire la source du problème",
+          label: "Instaurer un moratoire de pêche de 5 ans",
           consequence: {
-            text: "En travaillant avec les communautés locales, vous limitez l'entrée de nouveaux plastiques. Un changement lent mais prometteur.",
+            text: "Interdire totalement la pêche dans la région pour permettre aux stocks de se régénérer.",
             impact: { health: 5, oceanHealth: 10, resources: 0 },
           },
         },
         {
-          label: "Ignorer le problème",
+          label: "Introduire des quotas de pêche durable",
           consequence: {
-            text: "La pollution continue de s'accumuler. Thalassa souffre et s'affaiblit. Par ailleurs,  l’île de plastique continue de s’étendre, affaiblissant Thalassa encore plus.",
-            impact: { health: -10, oceanHealth: -20, resources: 0 },
+            text: "Limiter la pêche pour préserver les espèces tout en soutenant les pêcheurs.",
+            impact: { health: 10, oceanHealth: 20, resources: 0 },
           },
         },
       ],
@@ -221,7 +221,7 @@ const OceanMissionGame = () => {
       missionNumber: 6,
       type: "Mission",
       hasVideo: true,
-      idVideo: "",
+      idVideo: "KHT7HcuNFig",
       preQuestion: "Les eaux montantes",
       text: "La montée des eaux submerge les zones côtières et menace les habitats marins et humains.Thalassa ressent une pression constante sur sa poitrine, comme si elle étouffait.",
       choices: [
