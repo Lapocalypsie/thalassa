@@ -1,6 +1,44 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { AlertCircle, ChevronRight } from "lucide-react";
+import ModalVideo from "react-modal-video";
+import "react-modal-video/scss/modal-video.scss";
+
+const VideoModal = ({ videoId, isOpen, onClose }) => {
+  useEffect(() => {
+    // Start audio when component mounts
+    const audio = new Audio("quizz.mp3");
+    audio.loop = true;
+    audio.volume = 1;
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsAudioPlaying(true);
+        })
+        .catch((error) => {
+          console.log("Audio play failed:", error);
+        });
+    }
+
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
+
+  return (
+    <ModalVideo
+      channel="youtube"
+      isOpen={isOpen}
+      videoId={videoId}
+      onClose={onClose}
+    />
+  );
+};
 
 const OceanMissionGame = () => {
   const [currentMissionIndex, setCurrentMissionIndex] = useState(0);
@@ -11,20 +49,23 @@ const OceanMissionGame = () => {
     oceanHealth: 100,
     resources: 100,
   });
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [gameCompleted, setGameCompleted] = useState(false);
 
   const scenes = [
     {
       missionNumber: 1,
       type: "Mission",
+      hasVideo: false,
+      idVideo: "",
       preQuestion: "L'île de plastique (Océan Pacifique)",
-      character: "Florent",
-      text: "Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
+      text: "Thalassa entame sa mission en se rendant dans le plus grand océan du monde, l’océan Pacifique. Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
       choices: [
         {
           label: "Lancer une campagne de nettoyage massive",
           consequence: {
-            text: "Rassembler des bénévoles et installer des collecteurs flottants. L'océan commence à respirer, mais l'effort demande beaucoup d'énergie.",
-            impact: { health: -10, oceanHealth: 15, resources: -5 },
+            text: "Vous rassemblez des bénévoles et installez des collecteurs flottants. L'océan commence à respirer, mais l'effort demande beaucoup d'énergie.",
+            impact: { health: -20, oceanHealth: 25, resources: -10 },
           },
         },
         {
@@ -37,8 +78,8 @@ const OceanMissionGame = () => {
         {
           label: "Ignorer le problème",
           consequence: {
-            text: "La pollution continue de s'accumuler. Thalassa souffre et s'affaiblit.",
-            impact: { health: -15, oceanHealth: -10, resources: 0 },
+            text: "La pollution continue de s'accumuler. Thalassa souffre et s'affaiblit. Par ailleurs,  l’île de plastique continue de s’étendre, affaiblissant Thalassa encore plus.",
+            impact: { health: -10, oceanHealth: -20, resources: 0 },
           },
         },
       ],
@@ -47,63 +88,36 @@ const OceanMissionGame = () => {
     {
       missionNumber: 2,
       type: "Mission",
-      preQuestion: "Acidification des océans (Océan Atlantique)",
-      text: "L'acidification menace les écosystèmes marins. Les coraux blanchissent, les coquillages s'affaiblissent. Thalassa sent une douleur lancinante, comme une brûlure intérieure.",
+      hasVideo: false,
+      idVideo: "",
+      preQuestion: "La surpêche (Océan Atlantique)",
+      text: "Thalassa entame sa mission en se rendant dans le plus grand océan du monde, l’océan Pacifique. Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
       choices: [
         {
-          label: "Réduire les émissions de CO2",
+          label: "Lancer une campagne de nettoyage massive",
           consequence: {
-            text: "Promotion de l'énergie renouvelable et des transports verts. Un pas difficile mais crucial.",
-            impact: { health: -5, oceanHealth: 10, resources: -10 },
+            text: "Vous rassemblez des bénévoles et installez des collecteurs flottants. L'océan commence à respirer, mais l'effort demande beaucoup d'énergie.",
+            impact: { health: -20, oceanHealth: 25, resources: -10 },
           },
         },
         {
-          label: "Restaurer les écosystèmes",
+          label: "Réduire la source du problème",
           consequence: {
-            text: "Plantation de mangroves et protection des récifs. La nature commence à cicatriser.",
-            impact: { health: 5, oceanHealth: 15, resources: 0 },
+            text: "En travaillant avec les communautés locales, vous limitez l'entrée de nouveaux plastiques. Un changement lent mais prometteur.",
+            impact: { health: 5, oceanHealth: 10, resources: 0 },
           },
         },
         {
-          label: "Attendre une solution miraculeuse",
+          label: "Ignorer le problème",
           consequence: {
-            text: "L'inaction aggrave la situation. Les écosystèmes continuent de se détériorer.",
-            impact: { health: -15, oceanHealth: -15, resources: 0 },
+            text: "La pollution continue de s'accumuler. Thalassa souffre et s'affaiblit. Par ailleurs,  l’île de plastique continue de s’étendre, affaiblissant Thalassa encore plus.",
+            impact: { health: -10, oceanHealth: -20, resources: 0 },
           },
         },
       ],
-      nextMission: 3,
+      nextMission: 2,
     },
-    {
-      missionNumber: 3,
-      type: "Mission",
-      preQuestion: "Surpêche (Mer Méditerranée)",
-      text: "Les populations de poissons s'effondrent. Les filets industriels vident les océans de leur vie. Thalassa sent sa force diminuer, comme un océan vidé de son essence.",
-      choices: [
-        {
-          label: "Établir des zones marines protégées",
-          consequence: {
-            text: "Création de réserves où la vie marine peut se reconstituer. Un espoir renaît.",
-            impact: { health: 10, oceanHealth: 20, resources: -5 },
-          },
-        },
-        {
-          label: "Promouvoir la pêche durable",
-          consequence: {
-            text: "Sensibilisation et nouveaux quotas. Un changement progressif mais prometteur.",
-            impact: { health: 5, oceanHealth: 10, resources: 5 },
-          },
-        },
-        {
-          label: "Continuer comme si de rien n'était",
-          consequence: {
-            text: "La surpêche continue. Thalassa s'affaiblit, les océans perdent leur biodiversité.",
-            impact: { health: -20, oceanHealth: -20, resources: 0 },
-          },
-        },
-      ],
-      nextMission: null, // Last mission
-    },
+    // ... other scenes ...
   ];
 
   const currentScene = scenes[currentMissionIndex];
@@ -112,7 +126,6 @@ const OceanMissionGame = () => {
     setConsequenceDetails(choice.consequence);
     setShowConsequencePopup(true);
 
-    // Met à jour les stats
     setPlayerStats((prev) => ({
       health: Math.max(
         0,
@@ -136,7 +149,13 @@ const OceanMissionGame = () => {
       const nextMissionIndex = scenes.findIndex(
         (scene) => scene.missionNumber === currentScene.nextMission
       );
-      setCurrentMissionIndex(nextMissionIndex);
+      if (nextMissionIndex !== -1) {
+        setCurrentMissionIndex(nextMissionIndex);
+      } else {
+        setGameCompleted(true);
+      }
+    } else {
+      setGameCompleted(true);
     }
   };
 
@@ -159,6 +178,37 @@ const OceanMissionGame = () => {
             <div>🌊 Océan : {playerStats.oceanHealth}</div>
             <div>💧 Ressources : {playerStats.resources}</div>
           </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-6 bg-white text-red-800 px-6 py-2 rounded-full hover:bg-red-100 transition-all duration-300 flex items-center justify-center mx-auto font-semibold"
+          >
+            Recommencer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameCompleted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-900 to-green-600 text-white flex items-center justify-center p-4">
+        <div className="max-w-2xl bg-green-950/70 p-8 rounded-xl shadow-xl text-center">
+          <h2 className="text-4xl font-bold mb-6">Félicitations!</h2>
+          <p className="mb-4">
+            Vous avez terminé toutes les missions et sauvé les océans et
+            Thalassa!
+          </p>
+          <div className="space-y-4">
+            <div>🫀 Santé finale : {playerStats.health}</div>
+            <div>🌊 Santé de l'océan : {playerStats.oceanHealth}</div>
+            <div>💧 Ressources restantes : {playerStats.resources}</div>
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-6 bg-white text-green-800 px-6 py-2 rounded-full hover:bg-green-100 transition-all duration-300 flex items-center justify-center mx-auto font-semibold"
+          >
+            Rejouer
+          </button>
         </div>
       </div>
     );
@@ -172,7 +222,20 @@ const OceanMissionGame = () => {
             {currentScene.preQuestion}
           </h2>
           <div className="text-sm md:text-base bg-blue-700 px-3 py-1 rounded-full">
-            Mission {currentScene.missionNumber}
+            {currentScene.hasVideo ? (
+              <img
+                src="/play-circle-o.svg"
+                alt="Play Icon"
+                className="w-6 h-6 inline-block hover:opacity-80 cursor-pointer"
+                onClick={() => setIsVideoModalOpen(true)}
+              />
+            ) : (
+              <img
+                src="/play-circle-o.svg"
+                alt="Play Icon"
+                className="w-6 h-6 inline-block opacity-50 cursor-not-allowed"
+              />
+            )}
           </div>
         </div>
 
@@ -229,6 +292,12 @@ const OceanMissionGame = () => {
           </div>
         </div>
       )}
+
+      <VideoModal
+        videoId="pGGQNOivz0E"
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+      />
     </div>
   );
 };
