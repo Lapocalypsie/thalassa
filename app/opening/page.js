@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const OceanCallOpening = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -128,6 +129,21 @@ const OceanCallOpening = () => {
         >
           Continuer
         </motion.button>
+      )}
+
+      {/* Final Button for Redirection */}
+      {currentStep === steps.length - 1 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.5 }}
+        >
+          <Link href="/dialog">
+            <button className="mt-12 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105">
+              Vers le dialogue
+            </button>
+          </Link>
+        </motion.div>
       )}
     </div>
   );

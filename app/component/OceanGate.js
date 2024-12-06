@@ -60,7 +60,7 @@ const OceanGate = () => {
 
             <div className="flex justify-center lg:justify-start space-x-4">
               <button className="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
-                <Link href="/game"> Commencer la Mission</Link>
+                <Link href="/opening"> Commencer la Mission</Link>
               </button>
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                 Qui êtes vous?
