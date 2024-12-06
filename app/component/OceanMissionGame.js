@@ -56,8 +56,8 @@ const OceanMissionGame = () => {
     {
       missionNumber: 1,
       type: "Mission",
-      hasVideo: false,
-      idVideo: "",
+      hasVideo: true,
+      idVideo: "sRQ3kMSiNI8",
       preQuestion: "L'île de plastique (Océan Pacifique)",
       text: "Thalassa entame sa mission en se rendant dans le plus grand océan du monde, l’océan Pacifique. Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
       choices: [
@@ -88,8 +88,8 @@ const OceanMissionGame = () => {
     {
       missionNumber: 2,
       type: "Mission",
-      hasVideo: false,
-      idVideo: "",
+      hasVideo: true,
+      idVideo: "6DG_7cJHtMM",
       preQuestion: "La surpêche (Océan Atlantique)",
       text: "Thalassa entame sa mission en se rendant dans le plus grand océan du monde, l’océan Pacifique. Une vaste accumulation de plastique flotte entre la Californie et Hawaï, empoisonnant les courants et la faune marine. Thalassa ressent comme une lourdeur dans son corps, elle a du mal à se mouvoir, comme si ses veines étaient obstruées.",
       choices: [
@@ -151,7 +151,106 @@ const OceanMissionGame = () => {
       ],
       nextMission: 4,
     },
-    // ... other scenes ...
+    {
+      missionNumber: 4,
+      type: "Mission",
+      hasVideo: true,
+      idVideo: "790WlppWsXU",
+      preQuestion: "Les zones mortes (Mer d’Arabie)",
+      text: "Thalassa arrive dans les zones mortes de la mer d’Arabie. La pollution agricole y provoque l’eutrophisation, créant une zone morte sans oxygène. Thalassa se sent constamment essoufflée, elle a des difficultés à respirer.",
+      choices: [
+        {
+          label: "Restaurer les écosystèmes côtiers (mangroves, herbiers)",
+          consequence: {
+            text: "Planter des végétaux pour filtrer les polluants et absorber les nutriments",
+            impact: { health: +20, oceanHealth: +20, resources: -10 },
+          },
+        },
+        {
+          label:
+            " Ignorer la zone morte, Préserver les ressources pour d’autres missions.",
+          consequence: {
+            text: "L’écosystème s’effondre, et Thalassa perd encore plus de vitalité.",
+            impact: { health: -20, oceanHealth: -25, resources: +10 },
+          },
+        },
+        {
+          label: "Imposer des restrictions sur l’agriculture",
+          consequence: {
+            text: "Limiter l’utilisation d’engrais dans les régions voisines.",
+            impact: { health: 5, oceanHealth: 10, resources: 0 },
+          },
+        },
+      ],
+      nextMission: 5,
+    },
+    {
+      missionNumber: 5,
+      type: "Mission",
+      hasVideo: true,
+      idVideo: "C48EHs6A66A",
+      preQuestion: " L’AMOC en danger (Océan)",
+      text: "Il fait un froid glacial, Thalassa est dans l’Océan Atlantique Nord La fonte des glaces perturbe la salinité et ralentit l’AMOC, menaçant le climat mondial. Les battements de cœur de Thalassa sont irréguliers, elle ressent comme un déséquilibre global.",
+      choices: [
+        {
+          label: "Ne rien faire et laisser l’AMOC ralentir davantage.",
+          consequence: {
+            text: "Effondrement climatique global, Thalassa devient gravement malade.",
+            impact: { health: -25, oceanHealth: -10, resources: 0 },
+          },
+        },
+        {
+          label: "Réduire la fonte des glaces",
+          consequence: {
+            text: "Mettre en œuvre des politiques mondiales pour réduire les émissions de gaz à effet de serre",
+            impact: { health: 5, oceanHealth: -10, resources: -10 },
+          },
+        },
+        {
+          label:
+            " Restaurer un équilibre local, en utilisant des barrages ou des technologies pour ralentir la fonte dans une zone ciblée",
+          consequence: {
+            text: "Impact limité, mais permet de stabiliser temporairement l’AMOC",
+            impact: { health: 5, oceanHealth: 10, resources: -10 },
+          },
+        },
+      ],
+      nextMission: 6,
+    },
+    {
+      missionNumber: 6,
+      type: "Mission",
+      hasVideo: true,
+      idVideo: "",
+      preQuestion: "Les eaux montantes",
+      text: "La montée des eaux submerge les zones côtières et menace les habitats marins et humains.Thalassa ressent une pression constante sur sa poitrine, comme si elle étouffait.",
+      choices: [
+        {
+          label: "Ignorer le problème",
+          consequence: {
+            text: "Passer à une autre mission plus urgente.",
+            impact: { health: -15, oceanHealth: -20, resources: 5 },
+          },
+        },
+        {
+          label:
+            "Protéger une ville côtière vulnérable. Construire des digues et des protections pour empêcher l’inondation.",
+          consequence: {
+            text: " Les humains sont sauvés, mais les mangroves disparaissent, aggravant le problème à long terme.",
+            impact: { health: 5, oceanHealth: -10, resources: -15 },
+          },
+        },
+        {
+          label:
+            "Replanter des mangroves, Utiliser la nature pour ralentir l’érosion et absorber les eaux montantes",
+          consequence: {
+            text: "Solution durable pour l’écosystème, mais sacrifier une partie des habitations humaines.",
+            impact: { health: 10, oceanHealth: 10, resources: -20 },
+          },
+        },
+      ],
+      nextMission: 7,
+    },
   ];
 
   const currentScene = scenes[currentMissionIndex];
@@ -328,7 +427,8 @@ const OceanMissionGame = () => {
       )}
 
       <VideoModal
-        videoId="pGGQNOivz0E"
+        videoId={currentScene.idVideo}
+        autoplay={true}
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
       />
